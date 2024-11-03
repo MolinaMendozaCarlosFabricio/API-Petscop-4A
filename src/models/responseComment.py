@@ -20,7 +20,7 @@ class Response_comment(db.Model):
 
 
     def __init__(self, id_comment, id_response):
-        self.id_comment_to_response = id_response
-        self.id_response_to_comment = id_comment
+        self.id_comment_to_response = id_comment
+        self.id_response_to_comment = id_response
 
 from src.models.comment import Comment
