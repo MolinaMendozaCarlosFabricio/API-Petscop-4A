@@ -15,12 +15,22 @@ class Comment (db.Model):
     amount_reactions_comment = db.Column(db.Integer, nullable=False, default=0)
     id_user_comment = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'))
 
+    # Relaciones con otros modelos
     user = relationship('User', back_populates='comments', lazy='joined')
-    response_to_post = relationship('Response_post', back_populates='comments', lazy='joined')
-    response_to_local = relationship('Response_local', back_populates='comments', lazy='joined')
-    response_to_service = relationship('Response_service', back_populates='comments', lazy='joined')
-    response_to_comment = relationship('Response_post', foreign_keys=f'{schema_name}.response_to_comment.id_comment_to_response', back_populates='comentary_of_comment', lazy='joined')
-    comment_to_response = relationship('Response_post', foreign_keys=f'{schema_name}.response_to_comment.id_response_to_comment', back_populates='response_of_comment', lazy='joined')
+
+    # Relación inversa con Response_post
+    response_to_post = relationship('Response_post', back_populates='comment', lazy='joined')
+
+    # Relación inversa con Response_local
+    response_to_local = relationship('Response_local', back_populates='comment', lazy='joined')
+
+    # Relación inversa con Response_service
+    response_to_service = relationship('Response_service', back_populates='comment', lazy='joined')
+
+    # Relaciones hacia el modelo Response_comment
+    comentary = relationship('Response_comment', foreign_keys='Response_comment.id_comment_to_response', back_populates='comment', lazy='joined')
+    response = relationship('Response_comment', foreign_keys='Response_comment.id_response_to_comment', back_populates='response', lazy='joined')
+
 
     def __init__(self, body, id_user):
         self.body_comment = body
@@ -28,3 +38,7 @@ class Comment (db.Model):
         self.id_user_comment = id_user
 
 from src.models.user import User
+from src.models.commentPost import Response_post
+from src.models.commentLocal import Response_local
+from src.models.commentService import Response_service
+from src.models.responseComment import Response_comment
