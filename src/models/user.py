@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from sqlalchemy.orm import relationship
 from dotenv import load_dotenv
@@ -28,6 +27,7 @@ class User(db.Model):
     type_user = db.Column(Enum(TypeUserDateEnum), nullable=False)
 
     reposts = db.relationship('Repost', back_populates='user', lazy='joined')
+    comments = db.relationship('Comment', back_populates='user', lazy='joined')
 
     def __init__(self, name, lastname, birthday, email, password, type_user):
         self.name_user = name
