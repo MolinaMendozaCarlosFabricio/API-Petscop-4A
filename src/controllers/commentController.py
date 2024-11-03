@@ -77,9 +77,12 @@ def create_comment_to_response(data):
         return jsonify({"Message": "Campos faltantes"}), 404
     
     new_comment = Comment(body, id_user)
-    new_response = Response_comment(id_comment=id_comment_to_response, id_response=new_comment.id_comment)
 
     db.session.add(new_comment)
+    db.session.commit()
+
+    new_response = Response_comment(id_comment=id_comment_to_response, id_response=new_comment.id_comment)
+
     db.session.add(new_response)
     db.session.commit()
 
