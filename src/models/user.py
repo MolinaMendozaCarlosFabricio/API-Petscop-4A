@@ -1,11 +1,11 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from sqlalchemy.orm import relationship
 from dotenv import load_dotenv
 import os
 from sqlalchemy import Enum
 import enum
 
-db = SQLAlchemy()
+from . import db
 bcrypt = Bcrypt()
 load_dotenv()  
 
@@ -26,6 +26,9 @@ class User(db.Model):
     password_user = db.Column(db.String(255), nullable=False)
     type_user = db.Column(Enum(TypeUserDateEnum), nullable=False)
 
+    reposts = db.relationship('Repost', back_populates='user', lazy='joined')
+    comments = db.relationship('Comment', back_populates='user', lazy='joined')
+
     def __init__(self, name, lastname, birthday, email, password, type_user):
         self.name_user = name
         self.lastname_user = lastname
@@ -38,4 +41,4 @@ class User(db.Model):
         return bcrypt.check_password_hash(self.password_user, password)
 
     def __repr__(self):
-        return f'<User {self.nombre}>'
+        return f'<User {self.name_user}>'
