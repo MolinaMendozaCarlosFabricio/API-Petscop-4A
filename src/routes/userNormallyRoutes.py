@@ -18,7 +18,7 @@ def search_normally_users_route():
     data = request.get_json()
     return search_normally_users(data)
 
-@user_normally_blueprint.route('/edit_normal_user/<int:id_user>', methods=['PUT'])
+@user_normally_blueprint.route('/edit_profile/<int:id_user>', methods=['PUT'])
 def edit_profile_route(id_user):
     data = request.get_json()
     return edit_profile(data, id_user)

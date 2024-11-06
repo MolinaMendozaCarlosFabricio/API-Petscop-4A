@@ -22,20 +22,6 @@ def obtener_usuario_ruta():
 def get_user_by_id_route(user_id):
     return get_user_by_id(user_id)
 
-"""
-@usuario_blueprint.route('/search_users', methods=['POST'])
-def search_users_route():
-    data = request.get_json()
-    return search_users(data)
-
-
-@usuario_blueprint.route('/edit_username/<int:user_id>', methods=['PUT'])
-def edit_username_ruta(user_id):
-    data = request.get_json()
-    return edit_username(user_id, data)
-"""
-
-
 @usuario_blueprint.route('/edit_password/<int:user_id>', methods=['PUT'])
 def edit_password_user_ruta(user_id):
     data = request.get_json()

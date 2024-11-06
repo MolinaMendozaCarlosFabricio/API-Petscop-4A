@@ -12,7 +12,6 @@ class Comment (db.Model):
     __table_args__ = {'schema': schema_name }
     id_comment = db.Column(db.Integer, primary_key=True)
     body_comment = db.Column(db.Text, nullable=False)
-    amount_reactions_comment = db.Column(db.Integer, nullable=False, default=0)
     id_user_comment = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'))
 
     # Relaciones con otros modelos
@@ -34,7 +33,6 @@ class Comment (db.Model):
 
     def __init__(self, body, id_user):
         self.body_comment = body
-        self.amount_reactions_comment = 0
         self.id_user_comment = id_user
 
 from src.models.user import User

@@ -60,66 +60,6 @@ def get_user_by_id(user_id):
         "tipo_usuario": showThisUser.type_user.value 
     }), 200
 
-"""
-#@jwt_required()
-def search_users(data):
-    query = User.query
-
-    name = data.get('name')
-    lastname = data.get('lastname')
-    email = data.get('email')
-
-    if name:
-        query = query.filter(User.name_user.ilike(f"%{name}%"))
-    
-    if lastname:
-        query = query.filter(User.lastname_user.ilike(f"%{lastname}%"))
-    
-    if email:
-        query = query.filter(User.email_user.ilike(f"%{email}%"))
-    
-    users = query.all()
-
-    users_json = [{
-        "id": user.id_user,
-        "nombre": user.name_user,
-        "apellido": user.lastname_user,
-        "fecha_nacimiento": user.birthday_user,
-        "email": user.email_user,
-        "tipo_usuario": user.type_user.value
-    } for user in users]
-
-    return jsonify(users_json), 200
-
-
-#@jwt_required()
-def edit_username(user_id, data):
-    editThisUser = User.query.get(user_id)
-
-    if not editThisUser:
-        return jsonify({"Message": "Usuario no encontrado"}), 404
-    
-    name = data.get('name')
-    lastname = data.get('lastname')
-
-    if not name or not lastname:
-        return jsonify({"Message": "Hay campos sin llenar"}), 404
-    
-    editThisUser.name_user = name
-    editThisUser.lastname_user = lastname
-
-    db.session.commit()
-
-    return jsonify({
-        "Message" : "Username actualizado",
-        "id" : editThisUser.id_user,
-        "name" : editThisUser.name_user,
-        "lastname" : editThisUser.lastname_user
-    }), 200
-
-"""
-
-
 #@jwt_required()
 def edit_password_user(user_id, data):
     editThisUser = User.query.get(user_id)

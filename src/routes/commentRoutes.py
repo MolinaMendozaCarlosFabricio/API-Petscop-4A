@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from src.controllers.commentController import create_comment_to_local, create_comment_to_post, create_comment_to_response, create_comment_to_service, get_comments_of_post, get_comments_of_local, get_comments_of_service, get_comments_of_comment, edit_comment, add_reaction, remove_reaction, remove_comment_of_post, remove_comment_of_local, remove_comment_of_service, remove_response_of_comment
+from src.controllers.commentController import create_comment_to_local, create_comment_to_post, create_comment_to_response, create_comment_to_service, get_comments_of_post, get_comments_of_local, get_comments_of_service, get_comments_of_comment, edit_comment, remove_comment_of_post, remove_comment_of_local, remove_comment_of_service, remove_response_of_comment
 from flask_jwt_extended import JWTManager
 
 comment_blueprint = Blueprint('comments', __name__)
@@ -44,14 +44,6 @@ def get_comments_of_comment_route(id_comment):
 def edit_comment_route(id_comment):
     data = request.get_json()
     return edit_comment(data ,id_comment)
-
-@comment_blueprint.route('/add_reaction_of_comment/<int:id_comment>', methods=['PUT'])
-def add_reaction_route(id_comment):
-    return add_reaction(id_comment)
-
-@comment_blueprint.route('/remove_reaction_of_comment/<int:id_comment>', methods=['PUT'])
-def remove_reaction_route(id_comment):
-    return remove_reaction(id_comment)
 
 @comment_blueprint.route('/remove_comment_from_post/<int:id_comment>', methods=['DELETE'])
 def remove_comment_of_post_route(id_comment):
