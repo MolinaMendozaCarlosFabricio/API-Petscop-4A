@@ -6,27 +6,22 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
 def crear_usuario(data):
-    name = data.get('name')
-    lastname = data.get('lastname')
-    birthday = data.get('birthday')
     email = data.get('email')
     password = data.get('password')
     type_user = data.get('type_user')
 
-    if not name or not email or not password or not lastname or not birthday or not type_user:
+    if not email or not password or not type_user:
         return jsonify({"mensaje": "Faltan campos obligatorios"}), 400
 
     if User.query.filter_by(email_user=email).first():
         return jsonify({"mensaje": "El email ya está registrado"}), 400
 
-    nuevo_usuario = User(name=name, lastname=lastname, birthday=birthday, email=email, password=password, type_user=type_user)
+    nuevo_usuario = User(email=email, password=password, type_user=type_user)
     db.session.add(nuevo_usuario)
     db.session.commit()
     return jsonify({
         "mensaje": "Usuario creado con bcrypt",
         "id": nuevo_usuario.id_user,
-        "nombre": nuevo_usuario.name_user,
-        "apellido": nuevo_usuario.lastname_user,
         "email": nuevo_usuario.email_user
     }), 201
 
@@ -49,7 +44,6 @@ def obtener_usuario():
         return jsonify({"mensaje": "Usuario no encontrado"}), 404
     return jsonify({
         "id": user.id_user,
-        "nombre": user.name_user,
         "email": user.email_user
     }), 200
 
@@ -62,13 +56,11 @@ def get_user_by_id(user_id):
     
     return jsonify({
         "id": showThisUser.id_user,
-        "nombre": showThisUser.name_user,
-        "apellido": showThisUser.lastname_user,
-        "fecha_nacimiento": showThisUser.birthday_user,
         "email": showThisUser.email_user,
         "tipo_usuario": showThisUser.type_user.value 
     }), 200
 
+"""
 #@jwt_required()
 def search_users(data):
     query = User.query
@@ -99,6 +91,7 @@ def search_users(data):
 
     return jsonify(users_json), 200
 
+
 #@jwt_required()
 def edit_username(user_id, data):
     editThisUser = User.query.get(user_id)
@@ -123,6 +116,9 @@ def edit_username(user_id, data):
         "name" : editThisUser.name_user,
         "lastname" : editThisUser.lastname_user
     }), 200
+
+"""
+
 
 #@jwt_required()
 def edit_password_user(user_id, data):

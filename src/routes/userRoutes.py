@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from src.controllers.userController import crear_usuario, login_usuario, obtener_usuario, get_user_by_id, search_users, edit_username, edit_password_user, upgrade_user, downgrade_user, eliminar_usuario
+from src.controllers.userController import crear_usuario, login_usuario, obtener_usuario, get_user_by_id, edit_password_user, upgrade_user, downgrade_user, eliminar_usuario
 from flask_jwt_extended import JWTManager
 
 usuario_blueprint = Blueprint('usuarios', __name__)
@@ -22,15 +22,19 @@ def obtener_usuario_ruta():
 def get_user_by_id_route(user_id):
     return get_user_by_id(user_id)
 
+"""
 @usuario_blueprint.route('/search_users', methods=['POST'])
 def search_users_route():
     data = request.get_json()
     return search_users(data)
 
+
 @usuario_blueprint.route('/edit_username/<int:user_id>', methods=['PUT'])
 def edit_username_ruta(user_id):
     data = request.get_json()
     return edit_username(user_id, data)
+"""
+
 
 @usuario_blueprint.route('/edit_password/<int:user_id>', methods=['PUT'])
 def edit_password_user_ruta(user_id):
