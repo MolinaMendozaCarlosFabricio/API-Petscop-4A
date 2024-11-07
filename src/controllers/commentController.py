@@ -195,30 +195,6 @@ def edit_comment(data, id_comment):
 
     return jsonify({"Message": "Comentario editado"}), 200
 
-def add_reaction(id_comment):
-    editThisComment = Comment.query.get(id_comment)
-
-    if not editThisComment:
-        return jsonify({"Message": "No se encontró el comentario"}), 404
-    
-    editThisComment.amount_reactions_comment = editThisComment.amount_reactions_comment + 1
-
-    db.session.commit()
-
-    return jsonify({"Message": "Reacción añadida a comentario"}), 200
-
-def remove_reaction(id_comment):
-    editThisComment = Comment.query.get(id_comment)
-
-    if not editThisComment:
-        return jsonify({"Message": "No se encontró el comentario"}), 404
-    
-    editThisComment.amount_reactions_comment = editThisComment.amount_reactions_comment - 1
-
-    db.session.commit()
-
-    return jsonify({"Message": "Reacción quitada a comentario"}), 200
-
 def remove_comment_of_post(id_comment):
     deleteThisComment = Comment.query.get(id_comment)
     deleteThisRelation = Response_post.query.filter(Response_post.id_response_to_post == id_comment).all()  # Obtiene todas las relaciones que coincidan
