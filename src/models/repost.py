@@ -12,7 +12,7 @@ class Repost(db.Model):
     __table_args__ = {'schema': schema_name }
     # id_repost = db.Column(db.Integer, primary_key=True)
     id_user_repost = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'), primary_key=True)
-    id_post_repost = db.Column(db.Integer, nullable=False, primary_key=True)
+    id_post_repost = db.Column(db.String, nullable=False, primary_key=True)
 
     user = relationship('User', back_populates='reposts', lazy='joined')
 
