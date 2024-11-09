@@ -10,9 +10,9 @@ class Repost(db.Model):
     schema_name = os.getenv('SCHEMA_NAME')
     __tablename__ = 'reposts'
     __table_args__ = {'schema': schema_name }
-    id_repost = db.Column(db.Integer, primary_key=True)
-    id_user_repost = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'))
-    id_post_repost = db.Column(db.Integer, nullable=False)
+    # id_repost = db.Column(db.Integer, primary_key=True)
+    id_user_repost = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'), primary_key=True)
+    id_post_repost = db.Column(db.Integer, nullable=False, primary_key=True)
 
     user = relationship('User', back_populates='reposts', lazy='joined')
 
