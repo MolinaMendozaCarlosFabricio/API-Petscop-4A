@@ -70,7 +70,7 @@ def get_normally_user_by_id(id_user):
         "first_name": user_normally.first_name,
         "last_name": user_normally.last_name,
         "email": user.email_user,
-        "birthdate": user_normally.birthdate,
+        "birthdate": user_normally.birthdate.strftime('%Y-%m-%d'),
         "photo_profile": user_normally.profile_picture
     }), 200
 
