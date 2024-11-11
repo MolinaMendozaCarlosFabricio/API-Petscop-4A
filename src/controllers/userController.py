@@ -67,12 +67,12 @@ def edit_password_user(user_id, data):
     if not editThisUser:
         return jsonify({"Message" : "Usuario no encontrado"}), 404
     
-    new_password = data.get('password')
+    new_password = data.get('password_user')
 
     if not new_password:
         return jsonify({"Message": "Ingrese la contraseña"}), 404
     
-    editThisUser.password_user = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    editThisUser.password_user = bcrypt.generate_password_hash(data['password_user']).decode('utf-8')
 
     db.session.commit()
 

@@ -62,12 +62,15 @@ def get_normally_user_by_id(id_user):
 
     return jsonify({
         "Message": "Usuario encontrado",
-        "id": user.id_user,
-        "id_normally": user_normally.id_user_normally,
-        "name": user_normally.first_name,
+        "id_user": user.id_user,
+        "email_user": user.email_user,
+        "password_user": user.password_user,
+        "type_user": user.type_user,
+        "id_user_normally": user_normally.id_user_normally,
+        "first_name": user_normally.first_name,
         "last_name": user_normally.last_name,
         "email": user.email_user,
-        "birth_day": user_normally.birthdate,
+        "birthdate": user_normally.birthdate,
         "photo_profile": user_normally.profile_picture
     }), 200
 
