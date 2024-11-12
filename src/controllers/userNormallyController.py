@@ -6,7 +6,7 @@ def crear_usuario_normally(data):
     # Obtener datos requeridos para `User`
     type_user = data.get('type_user')
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('password_user')
     
     # Obtener datos específicos para `UserNormally`
     first_name = data.get('first_name')
