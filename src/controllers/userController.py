@@ -27,7 +27,7 @@ def crear_usuario(data):
 
 def login_usuario(data):
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('password_user')
     user = User.query.filter_by(email_user=email).first()
     if not user:
         return jsonify({"mensaje": "Credenciales inválidas"}), 401
