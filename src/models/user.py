@@ -28,7 +28,7 @@ class User(db.Model):
     )
 
     reposts = db.relationship('Repost', back_populates='user', lazy='joined')
-    comments = db.relationship('Comment', back_populates='user', lazy='joined')
+    # comments = db.relationship('Comment', back_populates='user', lazy='joined')
     user_normally = db.relationship("UserNormally", back_populates="user", uselist=False)
 
     def __init__(self, email, password, type_user):

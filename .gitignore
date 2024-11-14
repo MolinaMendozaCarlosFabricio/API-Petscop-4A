@@ -1,2 +1,4 @@
 .env
+petsbucket.json
+file_ids.json
 API_postgres
