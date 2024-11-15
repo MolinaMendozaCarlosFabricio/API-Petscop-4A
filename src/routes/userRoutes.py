@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager
 
 usuario_blueprint = Blueprint('usuarios', __name__, url_prefix='/users')
 
-@usuario_blueprint.route('/registrer', methods=['POST'])
+@usuario_blueprint.route('/register', methods=['POST'])
 def crear_usuario_ruta():
     data = request.get_json()
     return crear_usuario(data)

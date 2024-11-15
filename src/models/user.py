@@ -19,7 +19,6 @@ class User(db.Model):
     __tablename__ = 'users'
     __table_args__ = {'schema': schema_name}
     id_user = db.Column(db.Integer, primary_key=True)
-    
     email_user = db.Column(db.String(255), nullable=False, unique=True)
     password_user = db.Column(db.String(255), nullable=False)
     type_user = type_user = db.Column(
