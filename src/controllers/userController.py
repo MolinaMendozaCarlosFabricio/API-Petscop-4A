@@ -6,8 +6,8 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
 def crear_usuario(data):
-    email = data.get('email')
-    password = data.get('password')
+    email = data.get('email_user')
+    password = data.get('password_user')
     type_user = data.get('type_user')
 
     if not email or not password or not type_user:
@@ -20,9 +20,9 @@ def crear_usuario(data):
     db.session.add(nuevo_usuario)
     db.session.commit()
     return jsonify({
-        "mensaje": "Usuario creado con bcrypt",
+        "status": 201,
         "id": nuevo_usuario.id_user,
-        "email": nuevo_usuario.email_user
+        "mensaje": "Usuario creado con bcrypt"
     }), 201
 
 def login_usuario(data):
@@ -30,11 +30,22 @@ def login_usuario(data):
     password = data.get('password_user')
     user = User.query.filter_by(email_user=email).first()
     if not user:
-        return jsonify({"mensaje": "Credenciales inválidas"}), 401
+        return jsonify({
+            "status": 401,
+            "mensaje": "Credenciales inválidas"
+        }), 401
     if not user.check_password(password):
-        return jsonify({"mensaje": "Credenciales inválidas"}), 401
+        return jsonify({
+            "status": 401,
+            "mensaje": "Credenciales inválidas"
+        }), 401
     access_token = create_access_token(identity=user.id_user)
-    return jsonify({"mensaje": "Inicio de sesión exitoso", "token": access_token}), 200
+    return jsonify({
+        "id_user": user.id_user,
+        "type_user": user.type_user,
+        "status": 200,
+        "mensaje": "Inicio de sesión exitoso", "token": access_token
+    }), 200
 
 @jwt_required()
 def obtener_usuario():

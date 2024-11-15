@@ -39,12 +39,9 @@ def crear_usuario_normally(data):
     db.session.commit()  # Confirmar ambos registros
 
     return jsonify({
-        "mensaje": "Usuario normalmente creado",
+        "status": 201,
         "id_user": nuevo_usuario.id_user,
-        "type_user": nuevo_usuario.type_user,
-        "email": nuevo_usuario.email_user,
-        "first_name": nuevo_usuario_normally.first_name,
-        "last_name": nuevo_usuario_normally.last_name
+        "mensaje": "Usuario normalmente creado"
     }), 201
 
 def get_normally_user_by_id(id_user):

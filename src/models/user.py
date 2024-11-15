@@ -19,7 +19,6 @@ class User(db.Model):
     __tablename__ = 'users'
     __table_args__ = {'schema': schema_name}
     id_user = db.Column(db.Integer, primary_key=True)
-    
     email_user = db.Column(db.String(255), nullable=False, unique=True)
     password_user = db.Column(db.String(255), nullable=False)
     type_user = type_user = db.Column(
@@ -28,7 +27,7 @@ class User(db.Model):
     )
 
     reposts = db.relationship('Repost', back_populates='user', lazy='joined')
-    comments = db.relationship('Comment', back_populates='user', lazy='joined')
+    # comments = db.relationship('Comment', back_populates='user', lazy='joined')
     user_normally = db.relationship("UserNormally", back_populates="user", uselist=False)
 
     def __init__(self, email, password, type_user):
