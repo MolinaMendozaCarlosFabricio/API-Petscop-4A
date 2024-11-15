@@ -68,7 +68,7 @@ def get_normally_user_by_id(id_user):
         "last_name": user_normally.last_name,
         "email": user.email_user,
         "birthdate": user_normally.birthdate.strftime('%Y-%m-%d'),
-        "photo_profile": user_normally.profile_picture
+        "profile_picture": user_normally.profile_picture
     }), 200
 
 def search_normally_users(data):
