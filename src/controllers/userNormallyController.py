@@ -48,7 +48,7 @@ def get_normally_user_by_id(id_user):
     result = (
         db.session.query(UserNormally, User)
         .join(User, UserNormally.id_user == User.id_user)
-        .filter(UserNormally.id_user_normally == id_user)
+        .filter(UserNormally.id_user == id_user)
         .first()
     )
     
