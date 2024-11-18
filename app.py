@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(config['development'])
     db.init_app(app)
-    CORS(app)
+    CORS(app, supports_credentials=True)
     jwt = JWTManager(app)
     app.register_blueprint(usuario_blueprint)
     app.register_blueprint(repost_blueprint)
