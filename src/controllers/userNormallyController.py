@@ -1,6 +1,7 @@
 from flask import jsonify
 from src.models.user import User, db
 from src.models.user_normally import UserNormally
+from flask_jwt_extended import jwt_required
 
 def crear_usuario_normally(data):
     # Obtener datos requeridos para `User`
@@ -44,6 +45,7 @@ def crear_usuario_normally(data):
         "mensaje": "Usuario normalmente creado"
     }), 201
 
+@jwt_required()
 def get_normally_user_by_id(id_user):
     result = (
         db.session.query(UserNormally, User)
@@ -107,6 +109,7 @@ def search_normally_users(data):
 
     return jsonify(normal_users_json), 200
 
+@jwt_required()
 def edit_profile(data, id_user):
     editThisProfile = UserNormally.query.get(id_user)
 
