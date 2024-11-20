@@ -91,44 +91,6 @@ def edit_password_user(user_id, data):
         "Message" : "Contraseña actualizada"
     }), 200
 
-#@jwt_required()
-def upgrade_user(user_id):
-    upgradeThisUser = User.query.get(user_id)
-
-    if not upgradeThisUser:
-        return jsonify({"Message": "Usuario no encontrado"}), 404
-    
-    upgradeThisUser.type_user = "Suscriptor"
-
-    db.session.commit()
-
-    return jsonify({
-        "Message": "Usuario actualizado a suscriptor",
-        "id" : upgradeThisUser.id_user,
-        "name" : upgradeThisUser.name_user,
-        "lastname" : upgradeThisUser.lastname_user,
-        "type_user" : upgradeThisUser.type_user.value,
-    }), 200
-
-#@jwt_required()
-def downgrade_user(user_id):
-    downgradeThisUser = User.query.get(user_id)
-
-    if not downgradeThisUser:
-        return jsonify({"Message": "Usuario no encontrado"}), 404
-    
-    downgradeThisUser.type_user = "Normal"
-
-    db.session.commit()
-
-    return jsonify({
-        "Message": "Usuario rebajado a normal",
-        "id" : downgradeThisUser.id_user,
-        "name" : downgradeThisUser.name_user,
-        "lastname" : downgradeThisUser.lastname_user,
-        "type_user" : downgradeThisUser.type_user.value,
-    }), 200
-
 @jwt_required()
 def eliminar_usuario(user_id):
     user = User.query.get(user_id)
