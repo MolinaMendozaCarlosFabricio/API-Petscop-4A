@@ -45,7 +45,6 @@ def crear_usuario_normally(data):
         "mensaje": "Usuario normalmente creado"
     }), 201
 
-@jwt_required()
 def get_normally_user_by_id(id_user):
     result = (
         db.session.query(UserNormally, User)
