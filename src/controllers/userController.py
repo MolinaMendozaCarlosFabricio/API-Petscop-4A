@@ -68,7 +68,7 @@ def get_user_by_id(user_id):
     return jsonify({
         "id": showThisUser.id_user,
         "email": showThisUser.email_user,
-        "tipo_usuario": showThisUser.type_user.value 
+        "tipo_usuario": showThisUser.type_user
     }), 200
 
 #@jwt_required()
