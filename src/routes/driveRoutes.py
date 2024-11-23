@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, send_file
-from src.controllers.driveController import upload_to_drive, download_from_drive
+from src.controllers.driveController import upload_to_drive, download_from_drive, delete_from_drive
 import os
 import tempfile
 
@@ -44,3 +44,8 @@ def upload_drive():
 def download_drive(file_id):
     file_data = download_from_drive(file_id)
     return send_file(file_data, mimetype='image/jpeg', as_attachment=True, download_name=f'{file_id}.jpg')
+
+@drive_bp.route('/delete/<file_id>', methods=['DELETE'])
+def delete_from_drive_route(file_id):
+    delete_from_drive(file_id)
+    return jsonify({ 'Message' : "Archivo eliminado" }), 200

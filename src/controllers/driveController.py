@@ -22,3 +22,6 @@ def download_from_drive(file_id):
         status, done = downloader.next_chunk()
     file_data.seek(0)
     return file_data
+
+def delete_from_drive(file_id):
+    drive_service.files().delete(fileId=file_id).execute()
