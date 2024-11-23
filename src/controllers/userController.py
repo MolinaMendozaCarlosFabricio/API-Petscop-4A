@@ -66,7 +66,7 @@ def get_user_by_id(user_id):
         return jsonify({"Message" : "No se encontró al usuario"}), 404
     
     return jsonify({
-        "id": showThisUser.id_user,
+        "id_user": showThisUser.id_user,
         "email": showThisUser.email_user,
         "type_user": showThisUser.type_user
     }), 200
