@@ -30,8 +30,6 @@ def show_reposts():
     for user, repost in results:
         usersWhitRepost.append({
             "user_id": user.id_user,
-            "name": user.name_user,
-            "lastname": user.lastname_user,
             "post_id": repost.id_post_repost
         })
 
@@ -56,8 +54,6 @@ def show_repost_by_user(data):
     for user, repost in results:
         users_with_reposts.append({
             "user_id": user.id_user,
-            "name": user.name_user,
-            "lastname": user.lastname_user,
             "post_id": repost.id_post_repost
         })
 
