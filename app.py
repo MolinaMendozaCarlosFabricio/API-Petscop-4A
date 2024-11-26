@@ -8,12 +8,13 @@ from src.routes.repostRoutes import repost_blueprint
 from src.routes.userNormallyRoutes import user_normally_blueprint
 from src.routes.driveRoutes import drive_bp
 from src.models import db
+from flask_talisman import Talisman
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config['development'])
-    app.config['PREFERRED_URL_SCHEME'] = 'https'
-    app.config['HTTP_PROXY'] = True
+    app.config['PREFERRED_URL_SCHEME'] = 'https'  # Especifica HTTPS como esquema preferido
+    talisman = Talisman(app, force_https=True)  # Forzar HTTPS en todas las solicitudes
     db.init_app(app)
     CORS(app, supports_credentials=True)
     jwt = JWTManager(app)
