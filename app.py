@@ -12,6 +12,8 @@ from src.models import db
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config['development'])
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
+    app.config['HTTP_PROXY'] = True
     db.init_app(app)
     CORS(app, supports_credentials=True)
     jwt = JWTManager(app)
