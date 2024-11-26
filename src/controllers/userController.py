@@ -39,7 +39,7 @@ def login_usuario(data):
             "status": 401,
             "mensaje": "Credenciales inválidas"
         }), 401
-    access_token = create_access_token(identity=user.id_user)
+    access_token = create_access_token(identity=str(user.id_user))
     return jsonify({
         "id_user": user.id_user,
         "type_user": user.type_user,
