@@ -4,7 +4,6 @@ import os
 from config import drive_service
 from flask_jwt_extended import jwt_required
 
-@jwt_required()
 def upload_to_drive(file_path, file_name):
     file_metadata = {'name': file_name}
     media = MediaFileUpload(file_path, resumable=True)
