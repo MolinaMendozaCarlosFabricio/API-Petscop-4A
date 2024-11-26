@@ -15,7 +15,6 @@ def upload_to_drive(file_path, file_name):
     ).execute()
     return uploaded_file.get('id')
 
-@jwt_required()
 def download_from_drive(file_id):
     request = drive_service.files().get_media(fileId=file_id)
     file_data = BytesIO()
