@@ -9,19 +9,27 @@ from src.routes.userNormallyRoutes import user_normally_blueprint
 from src.routes.driveRoutes import drive_bp
 from src.models import db
 from flask_talisman import Talisman
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config['development'])
-    app.config['PREFERRED_URL_SCHEME'] = 'https'  # Especifica HTTPS como esquema preferido
-    talisman = Talisman(app, force_https=True)  # Forzar HTTPS en todas las solicitudes
+
+    # Configuración de HTTPS
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+    # Usa ProxyFix para manejar encabezados de proxy correctamente
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+
     db.init_app(app)
     CORS(app, supports_credentials=True)
     jwt = JWTManager(app)
+
     app.register_blueprint(usuario_blueprint)
     app.register_blueprint(repost_blueprint)
     app.register_blueprint(user_normally_blueprint)
     app.register_blueprint(drive_bp)
+
     return app
 
 if __name__ == '__main__':
