@@ -58,7 +58,7 @@ def obtener_usuario():
         "email": user.email_user
     }), 200
 
-#@jwt_required()
+@jwt_required()
 def get_user_by_id(user_id):
     showThisUser = User.query.get(user_id)
 
@@ -71,7 +71,7 @@ def get_user_by_id(user_id):
         "type_user": showThisUser.type_user
     }), 200
 
-#@jwt_required()
+@jwt_required()
 def edit_password_user(user_id, data):
     editThisUser = User.query.get(user_id)
 

@@ -2,7 +2,9 @@ from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from io import BytesIO
 import os
 from config import drive_service
+from flask_jwt_extended import jwt_required
 
+@jwt_required()
 def upload_to_drive(file_path, file_name):
     file_metadata = {'name': file_name}
     media = MediaFileUpload(file_path, resumable=True)
@@ -13,6 +15,7 @@ def upload_to_drive(file_path, file_name):
     ).execute()
     return uploaded_file.get('id')
 
+@jwt_required()
 def download_from_drive(file_id):
     request = drive_service.files().get_media(fileId=file_id)
     file_data = BytesIO()
@@ -23,5 +26,6 @@ def download_from_drive(file_id):
     file_data.seek(0)
     return file_data
 
+@jwt_required()
 def delete_from_drive(file_id):
     drive_service.files().delete(fileId=file_id).execute()

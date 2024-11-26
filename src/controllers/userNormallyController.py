@@ -72,6 +72,7 @@ def get_normally_user_by_id(id_user):
         "profile_picture": user_normally.profile_picture
     }), 200
 
+@jwt_required()
 def search_normally_users(data):
     query = (
         db.session.query(UserNormally, User)
@@ -137,6 +138,7 @@ def edit_profile(data, id_user):
         "lastname" : editThisProfile.last_name
     }), 200
 
+@jwt_required()
 def delete_profile(id_user):
     deleteThisNormalUser = UserNormally.query.get(id_user)
 
