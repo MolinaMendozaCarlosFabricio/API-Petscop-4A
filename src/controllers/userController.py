@@ -6,8 +6,8 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
 def crear_usuario(data):
-    email = data.get('email')
-    password = data.get('password')
+    email = data.get('email_user')
+    password = data.get('password_user')
     type_user = data.get('type_user')
 
     if not email or not password or not type_user:
@@ -20,21 +20,32 @@ def crear_usuario(data):
     db.session.add(nuevo_usuario)
     db.session.commit()
     return jsonify({
-        "mensaje": "Usuario creado con bcrypt",
+        "status": 201,
         "id": nuevo_usuario.id_user,
-        "email": nuevo_usuario.email_user
+        "mensaje": "Usuario creado con bcrypt"
     }), 201
 
 def login_usuario(data):
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('password_user')
     user = User.query.filter_by(email_user=email).first()
     if not user:
-        return jsonify({"mensaje": "Credenciales inválidas"}), 401
+        return jsonify({
+            "status": 401,
+            "mensaje": "Credenciales inválidas"
+        }), 401
     if not user.check_password(password):
-        return jsonify({"mensaje": "Credenciales inválidas"}), 401
+        return jsonify({
+            "status": 401,
+            "mensaje": "Credenciales inválidas"
+        }), 401
     access_token = create_access_token(identity=user.id_user)
-    return jsonify({"mensaje": "Inicio de sesión exitoso", "token": access_token}), 200
+    return jsonify({
+        "id_user": user.id_user,
+        "type_user": user.type_user,
+        "status": 200,
+        "mensaje": "Inicio de sesión exitoso", "token": access_token
+    }), 200
 
 @jwt_required()
 def obtener_usuario():
@@ -47,7 +58,7 @@ def obtener_usuario():
         "email": user.email_user
     }), 200
 
-#@jwt_required()
+@jwt_required()
 def get_user_by_id(user_id):
     showThisUser = User.query.get(user_id)
 
@@ -55,12 +66,12 @@ def get_user_by_id(user_id):
         return jsonify({"Message" : "No se encontró al usuario"}), 404
     
     return jsonify({
-        "id": showThisUser.id_user,
+        "id_user": showThisUser.id_user,
         "email": showThisUser.email_user,
-        "tipo_usuario": showThisUser.type_user.value 
+        "type_user": showThisUser.type_user
     }), 200
 
-#@jwt_required()
+@jwt_required()
 def edit_password_user(user_id, data):
     editThisUser = User.query.get(user_id)
 
@@ -78,44 +89,6 @@ def edit_password_user(user_id, data):
 
     return jsonify({
         "Message" : "Contraseña actualizada"
-    }), 200
-
-#@jwt_required()
-def upgrade_user(user_id):
-    upgradeThisUser = User.query.get(user_id)
-
-    if not upgradeThisUser:
-        return jsonify({"Message": "Usuario no encontrado"}), 404
-    
-    upgradeThisUser.type_user = "Suscriptor"
-
-    db.session.commit()
-
-    return jsonify({
-        "Message": "Usuario actualizado a suscriptor",
-        "id" : upgradeThisUser.id_user,
-        "name" : upgradeThisUser.name_user,
-        "lastname" : upgradeThisUser.lastname_user,
-        "type_user" : upgradeThisUser.type_user.value,
-    }), 200
-
-#@jwt_required()
-def downgrade_user(user_id):
-    downgradeThisUser = User.query.get(user_id)
-
-    if not downgradeThisUser:
-        return jsonify({"Message": "Usuario no encontrado"}), 404
-    
-    downgradeThisUser.type_user = "Normal"
-
-    db.session.commit()
-
-    return jsonify({
-        "Message": "Usuario rebajado a normal",
-        "id" : downgradeThisUser.id_user,
-        "name" : downgradeThisUser.name_user,
-        "lastname" : downgradeThisUser.lastname_user,
-        "type_user" : downgradeThisUser.type_user.value,
     }), 200
 
 @jwt_required()

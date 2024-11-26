@@ -10,7 +10,6 @@ class Repost(db.Model):
     schema_name = os.getenv('SCHEMA_NAME')
     __tablename__ = 'reposts'
     __table_args__ = {'schema': schema_name }
-    # id_repost = db.Column(db.Integer, primary_key=True)
     id_user_repost = db.Column(db.Integer, ForeignKey(f'{schema_name}.users.id_user'), primary_key=True)
     id_post_repost = db.Column(db.String, nullable=False, primary_key=True)
 

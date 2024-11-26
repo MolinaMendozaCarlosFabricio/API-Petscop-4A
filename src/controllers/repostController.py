@@ -4,7 +4,7 @@ from src.models.repost import  Repost
 from src.models.user import User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-#@jwt_required()
+@jwt_required()
 def create_repost(data):
     id_user = data.get('id_user')
     id_post = data.get('id_post')
@@ -21,7 +21,7 @@ def create_repost(data):
         "Message": "Post compartido"    
     }), 200
 
-#@jwt_required()
+@jwt_required()
 def show_reposts():
     results = db.session.query(User, Repost).join(Repost, User.id_user == Repost.id_user_repost).all()
 
@@ -30,14 +30,12 @@ def show_reposts():
     for user, repost in results:
         usersWhitRepost.append({
             "user_id": user.id_user,
-            "name": user.name_user,
-            "lastname": user.lastname_user,
             "post_id": repost.id_post_repost
         })
 
     return jsonify(usersWhitRepost), 200
 
-#@jwt_required()
+@jwt_required()
 def show_repost_by_user(data):
     id_user = data.get('id_user')
 
@@ -56,14 +54,12 @@ def show_repost_by_user(data):
     for user, repost in results:
         users_with_reposts.append({
             "user_id": user.id_user,
-            "name": user.name_user,
-            "lastname": user.lastname_user,
             "post_id": repost.id_post_repost
         })
 
     return jsonify(users_with_reposts), 200
 
-#@jwt_required
+@jwt_required
 def delete_repost(data):
 
     id_user = data.get('id_user')

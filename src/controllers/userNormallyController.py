@@ -1,12 +1,13 @@
 from flask import jsonify
 from src.models.user import User, db
 from src.models.user_normally import UserNormally
+from flask_jwt_extended import jwt_required
 
 def crear_usuario_normally(data):
     # Obtener datos requeridos para `User`
     type_user = data.get('type_user')
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('password_user')
     
     # Obtener datos específicos para `UserNormally`
     first_name = data.get('first_name')
@@ -39,19 +40,16 @@ def crear_usuario_normally(data):
     db.session.commit()  # Confirmar ambos registros
 
     return jsonify({
-        "mensaje": "Usuario normalmente creado",
+        "status": 201,
         "id_user": nuevo_usuario.id_user,
-        "type_user": nuevo_usuario.type_user,
-        "email": nuevo_usuario.email_user,
-        "first_name": nuevo_usuario_normally.first_name,
-        "last_name": nuevo_usuario_normally.last_name
+        "mensaje": "Usuario normalmente creado"
     }), 201
 
 def get_normally_user_by_id(id_user):
     result = (
         db.session.query(UserNormally, User)
         .join(User, UserNormally.id_user == User.id_user)
-        .filter(UserNormally.id_user_normally == id_user)
+        .filter(UserNormally.id_user == id_user)
         .first()
     )
     
@@ -70,10 +68,11 @@ def get_normally_user_by_id(id_user):
         "first_name": user_normally.first_name,
         "last_name": user_normally.last_name,
         "email": user.email_user,
-        "birthdate": user_normally.birthdate,
-        "photo_profile": user_normally.profile_picture
+        "birthdate": user_normally.birthdate.strftime('%Y-%m-%d'),
+        "profile_picture": user_normally.profile_picture
     }), 200
 
+@jwt_required()
 def search_normally_users(data):
     query = (
         db.session.query(UserNormally, User)
@@ -110,6 +109,7 @@ def search_normally_users(data):
 
     return jsonify(normal_users_json), 200
 
+@jwt_required()
 def edit_profile(data, id_user):
     editThisProfile = UserNormally.query.get(id_user)
 
@@ -138,6 +138,7 @@ def edit_profile(data, id_user):
         "lastname" : editThisProfile.last_name
     }), 200
 
+@jwt_required()
 def delete_profile(id_user):
     deleteThisNormalUser = UserNormally.query.get(id_user)
 
