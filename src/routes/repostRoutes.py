@@ -18,6 +18,7 @@ def show_reposts_by_user_route():
     data = request.get_json()
     return show_repost_by_user(data)
 
-@repost_blueprint.route('/delete/<int:id_repost>', methods=['DELETE'])
-def delete_repost_route(id_repost):
-    return delete_repost(id_repost)
+@repost_blueprint.route('/delete', methods=['DELETE'])
+def delete_repost_route():
+    data = request.get_json()
+    return delete_repost(data)

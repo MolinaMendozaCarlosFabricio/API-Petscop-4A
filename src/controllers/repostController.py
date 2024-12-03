@@ -68,18 +68,18 @@ def delete_repost(data):
     if not id_user or not id_post:
         return jsonify({"Message": "Campos faltantes"}), 404
 
-    repost = (
+    reposts = (
         db.session.query(Repost)
         .filter(Repost.id_user_repost == id_user)
         .filter(Repost.id_post_repost == id_post)
-        .all()
-        #Repost.query.get(id_repost)
+        .first()
     )
 
-    if not repost:
+    if not reposts:
         return jsonify({"Message" : "Repost no encontrado"}), 404
     
-    db.session.delete(repost)
+    db.session.delete(reposts)
+    
     db.session.commit()
 
     return jsonify({"Message" : "Repost eliminado"}), 200

@@ -22,16 +22,6 @@ def upload_drive():
     file_id = upload_to_drive(file_path, file_name)
     google_drive_url = f"https://drive.google.com/uc?id={file_id}"
 
-    # Guardar el file_id en un archivo JSON
-    data = {}
-    if os.path.exists('file_ids.json'):
-        with open('file_ids.json', 'r') as f:
-            data = json.load(f)
-
-    data[file_name] = file_id
-    with open('file_ids.json', 'w') as f:
-        json.dump(data, f)
-
     os.remove(file_path)
 
     return jsonify({
